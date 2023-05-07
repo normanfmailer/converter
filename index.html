@@ -1,0 +1,97 @@
+<html>
+<head>
+  <title>LPSG Tool</title>
+</head>
+<body>
+  <style>
+    form {
+    width: 500px;
+    overflow: hidden;
+    background-color: yellow;
+    }
+    input {
+        width: 50%;
+    }
+    span {
+        display: block;
+        overflow: hidden;
+        padding-right:10px;
+    }
+  </style>
+  <script>
+    function convertLinks(){
+      var inLinks = document.getElementById('inLinks').value.slice(); 
+      // Avoiding countint double-delimiters
+      inLinksMod = inLinks.replace(", "," ");
+      // Split by comma or space
+      linkList = inLinksMod.split(/[, ]+/);
+    
+      for(const index in linkList) {
+        var outLink = convertLink(linkList[index]);
+        appendLink(outLink);
+      }
+    
+      // Clear input on conversion
+      document.getElementById('inLinks').value = "";
+    
+      /*
+      // Put video in page
+      document.getElementById('outLinks').href = outLink;
+      document.getElementById('outVideo').src = outLink;
+      */
+    }
+    
+    function clearLinks(){
+      document.getElementById('outLinks').innerHTML = "";
+      document.getElementById('inLinks').value = "";
+    }
+    
+    function convertLink(inLink){
+      // Old replace
+      // var outLink = inLink.replace("thumbnail", "video").replace(".jpg", ".mp4");
+      var outLink = inLink.replace("attachments/posters", "video").replace(".jpg", ".mp4");
+      return outLink
+    }
+    
+    function appendLink(outLink){
+      var outLinkList = document.getElementById('outLinks');
+      var newLink = document.createElement("a");
+      newLink.href = outLink;
+      newLink.target = "_blank";
+      newLink.innerHTML = outLink;
+      outLinkList.appendChild(newLink);
+      var lineBreak1 = document.createElement("br");
+      outLinkList.appendChild(lineBreak1);
+      var lineBreak2 = document.createElement("br");
+      outLinkList.appendChild(lineBreak2);
+    }
+    
+    // Event listener for 'Enter'  on input
+    window.onload = function() {
+      var inLinks = document.getElementById('inLinks');
+      inLinks.addEventListener("keypress", function(event) {
+      // If the user presses the "Enter" key on the keyboard
+      if (event.key === "Enter") {
+        // Cancel the default action, if needed
+        event.preventDefault();
+        // Trigger the button element with a click
+        document.getElementById("convertBtn").click();
+        console.log('enter')
+      }
+      }                                                  ); 
+    }
+    
+  </script>
+  <label for="inLinks">Link:</label>
+  <input placeholder="https://example.com"
+       pattern="https://.*" size="30" id="inLinks" name="fname">
+  <button id='convertBtn' onclick="convertLinks()">Convert</button>
+  <button onclick="clearLinks()">Clear</button>
+  <br><br>
+  <label for="outLink">Video links:</label>
+  <div href="" id="outLinks" download></div><br><br>
+  <!--
+  <video height="500px" id="outVideo" src=""></video>
+  -->
+</body>
+</html>
