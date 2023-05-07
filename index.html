@@ -19,7 +19,7 @@
     }
   </style>
   <script>
-    function convertLinks(extension=".mp4"){
+    function convertLinks(extension){
       var inLinks = document.getElementById('inLinks').value.slice(); 
       // Avoiding countint double-delimiters
       inLinksMod = inLinks.replace(", "," ");
@@ -47,7 +47,7 @@
       document.getElementById('inLinks').value = "";
     }
     
-    function convertLink(inLink, extension="mp4"){
+    function convertLink(inLink, extension){
       // Old replace
       // var outLink = inLink.replace("thumbnail", "video").replace(".jpg", ".mp4");
       var outLink = inLink.replace("attachments/posters", "video").replace(".jpg", extension);
