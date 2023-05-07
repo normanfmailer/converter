@@ -19,7 +19,7 @@
     }
   </style>
   <script>
-    function convertLinks(){
+    function convertLinks(extension=".mp4"){
       var inLinks = document.getElementById('inLinks').value.slice(); 
       // Avoiding countint double-delimiters
       inLinksMod = inLinks.replace(", "," ");
@@ -27,8 +27,9 @@
       linkList = inLinksMod.split(/[, ]+/);
     
       for(const index in linkList) {
-        var outLink = convertLink(linkList[index]);
-        appendLink(outLink);
+        var outLink = convertLink(linkList[index], extension);
+        prependLink(outLink);
+        //appendLink(outLink);
       }
     
       // Clear input on conversion
@@ -46,10 +47,10 @@
       document.getElementById('inLinks').value = "";
     }
     
-    function convertLink(inLink){
+    function convertLink(inLink, extension="mp4"){
       // Old replace
       // var outLink = inLink.replace("thumbnail", "video").replace(".jpg", ".mp4");
-      var outLink = inLink.replace("attachments/posters", "video").replace(".jpg", ".mp4");
+      var outLink = inLink.replace("attachments/posters", "video").replace(".jpg", extension);
       return outLink
     }
     
@@ -64,6 +65,19 @@
       outLinkList.appendChild(lineBreak1);
       var lineBreak2 = document.createElement("br");
       outLinkList.appendChild(lineBreak2);
+    }
+    
+    function prependLink(outLink){
+      var outLinkList = document.getElementById('outLinks');\
+      var newLink = document.createElement("a");
+      newLink.href = outLink;
+      newLink.target = "_blank";
+      newLink.innerHTML = outLink;
+      var lineBreak1 = document.createElement("br");
+      var lineBreak2 = document.createElement("br");
+      outLinkList.prepend(lineBreak1);
+      outLinkList.preprend(newLink);
+      outLinkList.prepend(lineBreak2);
     }
     
     // Event listener for 'Enter'  on input
@@ -85,7 +99,8 @@
   <label for="inLinks">Link:</label>
   <input placeholder="https://example.com"
        pattern="https://.*" size="30" id="inLinks" name="fname">
-  <button id='convertBtn' onclick="convertLinks()">Convert</button>
+  <button id='convertBtn' onclick="convertLinks('.mp4')">Convert</button>
+  <button onclick="convertLinks('.mov')">Convert ".mov"</button>
   <button onclick="clearLinks()">Clear</button>
   <br><br>
   <label for="outLink">Video links:</label>
