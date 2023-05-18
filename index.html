@@ -50,7 +50,7 @@
     function convertLink(inLink, extension){
       // Old replace
       // var outLink = inLink.replace("thumbnail", "video").replace(".jpg", ".mp4");
-      var outLink = inLink.replace("attachments/posters", "video").replace(".jpg", extension);
+      var outLink = inLink.replace("attachments/posters", "video").replace(".jpg", extension).replace("thumbnail", "video");
       return outLink
     }
     
